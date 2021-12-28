@@ -26,13 +26,22 @@ const landing = () => {
         fetchData();
     }, []);
 
+    const getDetails= (id,name,sumary,image) => {
+        localStorage.setItem('movieId', id);
+        localStorage.setItem('movieName', name);
+        localStorage.setItem('movieSumary', sumary);
+        localStorage.setItem('movieImage', image);
+        window.location.href = '/shows/' + id;
+    }
+
+
     
 
     return (
         <div className="landing">
             <div className="brandName">
-                <h1 className="brand">Movies</h1>
-                <p className="brand">Find your favourite movies</p>
+                <h1 className="brand">Binge</h1>
+                <p className="brand">The most favourite movie platform.</p>
             </div>
             <div className="landing-content">
                 <div className="landing-content-text">
@@ -44,10 +53,15 @@ const landing = () => {
                 </div>
             </div>
         <h3 className="scroll">Scroll down to see more</h3>
-        <h3 className="Movies">Movies</h3>
+        <h3 className="Movies-section">Movies</h3>
         <div className="movies">
             {movies.map(movies => (
-                <div className="movie-card" key={movies.show.id}>{movies.show.name}</div>
+                <div className="movie-card" key={movies.show.id} onClick={()=>getDetails(movies.show.id, movies.show.name, movies.show.summary, movies.show.image.original)}>
+                    <img className="movie-card-image" src={movies.show.image.original} alt="movieimage" ></img>
+                    <div className="movie-card-title"> Movie Name : {movies.show.name}</div>
+                    <div className='movie-card-rating'>Rating : {movies.show.rating.average}</div>
+                    <button className="movie-card-button" >Learn More</button>
+                </div>
             ))}
         </div>
         </div>
